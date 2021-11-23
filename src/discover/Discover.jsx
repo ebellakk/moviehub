@@ -87,7 +87,7 @@ const Discover = props => {
 
   return (
     <div>
-      <div className="searchWrapper" onKeyDown={handleEnterKey}>
+      <div onKeyDown={handleEnterKey}>
         <Paper>
           <TextField
             type="search"
@@ -99,12 +99,14 @@ const Discover = props => {
           </IconButton>
         </Paper>
         <Paper>
-          <Rating
-            value={rating}
-            max={10}
-            onChange={(event, newValue) => {
-              handleRatingFilter(newValue);
-            }} />
+          <div className="rating-filter" >
+            <Rating
+              value={rating}
+              max={10}
+              onChange={(event, newValue) => {
+                handleRatingFilter(newValue);
+              }} />
+          </div>
         </Paper>
       </div>
       <MovieList movies={movies} filteredMovies={filteredMovies} rating={rating} loading={loading} />
