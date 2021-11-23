@@ -64,7 +64,7 @@ const Discover = props => {
   }
 
   const filterByRating = (rating) => {
-    let newFilteredMovies = movies && movies.filter(movie => Math.floor(movie.vote_average) >= (rating * 2) - 2 && Math.floor(movie.vote_average) <= rating * 2);
+    let newFilteredMovies = movies && movies.filter(movie => Math.floor(movie.vote_average) >= (rating - 2) && Math.floor(movie.vote_average) <= rating);
     setFilteredMovies(newFilteredMovies);
   }
 
@@ -101,7 +101,7 @@ const Discover = props => {
         <Paper>
           <Rating
             value={rating}
-            max={5}
+            max={10}
             onChange={(event, newValue) => {
               handleRatingFilter(newValue);
             }} />
