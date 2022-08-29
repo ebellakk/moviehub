@@ -1,58 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
-import { CircularProgress, Grid, Typography, makeStyles, Divider, ImageList, ImageListItem, Paper, ImageListItemBar, Tooltip } from '@material-ui/core';
-import Fab from '@material-ui/core/Fab';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import IconButton from '@material-ui/core/IconButton';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import ExplicitIcon from '@material-ui/icons/Explicit';
-import { Rating } from '@material-ui/lab';
+import { CircularProgress, Divider, IconButton, ImageList, ImageListItem, ImageListItemBar, Rating, Tooltip, Typography } from '@mui/material';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import Fab from '@mui/material/Fab';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import ExplicitIcon from '@mui/icons-material/Explicit';
 import { extractYear, formatRuntime } from '../util/DateUtil';
 import { generateImageURL, generateIMDBURL, generateMovieDetailURL } from '../util/URLResolver';
 
-const useStyles = makeStyles((theme) => ({
-  title: {
-    padding: theme.spacing(0.5),
-    fontSize: '3rem'
-  },
-  info: {
-    padding: theme.spacing(0.5),
-    fontSize: '1.5rem'
-  },
-  imageListWrapper: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    overflow: 'hidden',
-    backgroundColor: theme.palette.background.paper,
-  },
-  icon: {
-    color: 'rgba(255, 255, 255, 0.54)',
-  },
-  okIcon: {
-    color: 'rgba(0, 255, 0, 0.54)',
-  },
-  explicitIcon: {
-    color: 'rgba(255, 0, 0, 0.54)',
-  },
-  fab: {
-    position: 'fixed',
-    bottom: '20px',
-    left: '20px',
-    zIndex: '9999'
-  }
-}));
-
 const MovieDetails = props => {
-  const classes = useStyles();
+  const isLargeViewport = useMediaQuery('(min-width:769px)');
 
   const { uri } = useParams();
 
   const [movie, setMovie] = useState({});
   const [loading, setLoading] = useState(false);
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const url = generateMovieDetailURL(uri);
@@ -104,91 +70,64 @@ const MovieDetails = props => {
       {!loading && !movie.id &&
         <div>
           <img src={`${process.env.PUBLIC_URL}/assets/images/nocontent.jpg`} alt="no result" />
-          <Typography className={classes.info}>
+          <Typography>
             No result
           </Typography>
         </div>
       }
       {!loading && movie && movie.id &&
         <div>
-          <div className="imageListWrapper">
-            <ImageList rowHeight={750} className={classes.imageList} cols={2}>
-              {renderImage(movie.id, movie.poster_path, `${movie.title} poster`, "Poster", movie.original_title, movie.imdb_id)}
-              {renderImage(movie.imdb_id, movie.backdrop_path, `${movie.title} backdrop`, "Backdrop", movie.original_title, movie.imdb_id)}
-            </ImageList>
-          </div>
+          <ImageList cols={isLargeViewport? 2 : 1}>
+            {renderImage(movie.id, movie.poster_path, `${movie.title} poster`, "Poster", movie.original_title, movie.imdb_id)}
+            {renderImage(movie.imdb_id, movie.backdrop_path, `${movie.title} backdrop`, "Backdrop", movie.original_title, movie.imdb_id)}
+          </ImageList>
           <Divider />
-          <Paper>
-            <Typography className={classes.title}> {movie.title} ({extractYear(movie.release_date)}) </Typography>
-          </Paper>
+          <Typography variant="h1"> {movie.title} ({extractYear(movie.release_date)}) </Typography>
           <Divider />
-          <Paper>
-            <Typography className={classes.info}>
-              {formatRuntime(movie.runtime)}
+          <Typography variant="h2">
+            {formatRuntime(movie.runtime)}
+          </Typography>
+          <Divider />
+          <ImageList cols={isLargeViewport? 3 : 2}>
+            {movie.production_companies && movie.production_companies.map((company) => {
+              return renderImage(company.id, company.logo_path, company.name, company.name, company.origin_country)
+            })}
+          </ImageList>
+          <Divider />
+          <Typography>
+            {movie.genres && movie.genres.map((genre) => genre.name).join(', ')}
+          </Typography>
+          <Divider />
+          <Typography>
+            {movie.tagline}
+          </Typography>
+          <Divider />
+          <Rating name="read-only" value={Math.floor(movie.vote_average)} readOnly max={10} />
+          <Divider />
+          <Tooltip title="MPA Rating">
+            <Typography>
+              Parental Guide:
+              <IconButton aria-label={`info about ${movie.title}`} color={movie.adult? "error" : "success"}>
+                {movie.adult && <ExplicitIcon />}
+                {!movie.adult && <CheckCircleIcon />}
+              </IconButton>
             </Typography>
-          </Paper>
+          </Tooltip>
           <Divider />
-          <div className="imageListWrapper">
-            <ImageList rowHeight={300} className={classes.imageList} cols={3}>
-              {movie.production_companies && movie.production_companies.map((company) => {
-                return renderImage(company.id, company.logo_path, company.name, company.name, company.origin_country)
-              })}
-            </ImageList>
-          </div>
-          <Divider />
-          <Paper>
-            <Grid item sm={12}>
-              <Typography className={classes.info}>
-                {movie.genres && movie.genres.map((genre) => genre.name).join(', ')}
-              </Typography>
-            </Grid>
-          </Paper>
-          <Divider />
-          <Paper>
-            <Typography className={classes.info}>
-              {movie.tagline}
-            </Typography>
-          </Paper>
-          <Divider />
-          <Paper>
-            <Rating name="read-only" value={Math.floor(movie.vote_average)} readOnly max={10} />
-          </Paper>
-          <Divider />
-          <Paper>
-            <Tooltip title="MPA Rating">
-              <Typography className={classes.info}>
-                Parental Guide:
-                <IconButton aria-label={`info about ${movie.title}`} className={movie.adult ? classes.explicitIcon : classes.okIcon}>
-                  {movie.adult && <ExplicitIcon />}
-                  {!movie.adult && <CheckCircleIcon />}
-                </IconButton>
-              </Typography>
-            </Tooltip>
-          </Paper>
-          <Divider />
-          <Paper>
-            <Grid item sm={12}>
-              <Typography className={classes.info}>
-                {movie.overview}
-              </Typography>
-            </Grid>
-          </Paper>
+          <Typography>
+            {movie.overview}
+          </Typography>
         </div>
       }
-      <div className={classes.fab}>
-        <Grid container justify="space-between" spacing={1}>
-          <Grid item xs={1}>
-            <Fab
-              aria-label="back"
-              title="Back"
-              color="primary"
-              onClick={() => history.push('/movies')}
-            >
-              <ArrowBackIcon />
-            </Fab>
-          </Grid>
-        </Grid>
-      </div>
+      <Divider />
+      <Fab
+        aria-label="back"
+        title="Back"
+        color="primary"
+        onClick={() => navigate('/movies')}
+      >
+        <ArrowBackIcon />
+      </Fab>
     </div >
   );
 };

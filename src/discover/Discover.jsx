@@ -1,40 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
-import { Paper, TextField } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import IconButton from '@material-ui/core/IconButton';
-import SearchIcon from '@material-ui/icons/Search';
-import { Rating } from '@material-ui/lab';
+import { IconButton, Rating, TextField } from '@mui/material';
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import { generateDiscoverURL, generateMovieSearchURL } from '../util/URLResolver';
 import MovieList from './MovieList';
 
-const useStyles = makeStyles((theme) => ({
-  title: {
-    padding: theme.spacing(0.5),
-    fontSize: '3rem'
-  },
-  info: {
-    padding: theme.spacing(0.5),
-    fontSize: '1.5rem'
-  },
-  imageListWrapper: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    overflow: 'hidden',
-    backgroundColor: theme.palette.background.paper,
-  },
-  icon: {
-    color: 'rgba(255, 255, 255, 0.54)',
-  },
-  redIcon: {
-    color: 'rgba(255, 0, 0, 0.54)',
-  }
-}));
-
 const Discover = props => {
-  const classes = useStyles();
-
   const [loading, setLoading] = useState(false);
   const [movies, setMovies] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
@@ -88,26 +59,25 @@ const Discover = props => {
   return (
     <div>
       <div onKeyDown={handleEnterKey}>
-        <Paper>
+        <div className='moviehub-centered'>
           <TextField
             type="search"
             placeholder="Search..."
             onChange={(event) => setQuery(event.target.value)}
           />
-          <IconButton aria-label={`search`} className={classes.redIcon}>
-            <SearchIcon onClick={() => searchMovies(query)} />
+          <IconButton aria-label={`search`} color="success" onClick={() => searchMovies(query)}>
+            <SearchOutlinedIcon />
           </IconButton>
-        </Paper>
-        <Paper>
-          <div className="rating-filter" >
-            <Rating
-              value={rating}
-              max={10}
-              onChange={(event, newValue) => {
-                handleRatingFilter(newValue);
-              }} />
-          </div>
-        </Paper>
+        </div>
+        <div className="moviehub-rating-filter" >
+          <Rating
+            name="rating"
+            value={rating}
+            max={10}
+            onChange={(event, newValue) => {
+              handleRatingFilter(newValue);
+            }} />
+        </div>
       </div>
       <MovieList movies={movies} filteredMovies={filteredMovies} rating={rating} loading={loading} />
     </div>

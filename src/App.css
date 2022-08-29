@@ -1,8 +1,8 @@
-.MovieHub {
+.moviehub {
   text-align: center;
 }
 
-html {
+body {
   background: #000;
   filter: invert(1) hue-rotate(180deg);
 }
@@ -15,6 +15,11 @@ svg {
   filter: invert(1) hue-rotate(180deg);
 }
 
-.rating-filter {
+.moviehub-rating-filter {
   background-color: green !important;
+}
+
+.moviehub-centered {
+  display: flex;
+  justify-content: center;
 }

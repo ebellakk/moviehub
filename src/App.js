@@ -1,21 +1,28 @@
 import './App.css';
 
-import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+
+import { ThemeProvider } from '@mui/styles';
+import { createTheme } from '@mui/material/styles';
 
 import MovieDetails from './detail/MovieDetails';
 import Discover from './discover/Discover';
 
+const theme = createTheme();
+
 function App() {
   return (
-    <Router>
-      <div className="MovieHub" >
-        <Switch>
-          <Route exact path="/" children={<Discover />} />
-          <Route exact path="/movies" children={<Discover />} />
-          <Route path="/movies/:uri" children={<MovieDetails />} />
-        </Switch>
+    <ThemeProvider theme={theme}>
+      <Router>
+      <div className="moviehub" >
+        <Routes>
+          <Route path="/" element={<Discover />} />
+          <Route path="/movies" element={<Discover />} />
+          <Route path="/movies/:uri" element={<MovieDetails />} />
+        </Routes>
       </div>
     </Router>
+    </ThemeProvider>
   );
 }
 
