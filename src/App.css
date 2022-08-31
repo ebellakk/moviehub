@@ -14,12 +14,3 @@ canvas,
 svg {
   filter: invert(1) hue-rotate(180deg);
 }
-
-.moviehub-rating-filter {
-  background-color: green !important;
-}
-
-.moviehub-centered {
-  display: flex;
-  justify-content: center;
-}

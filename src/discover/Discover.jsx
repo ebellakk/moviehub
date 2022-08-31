@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from 'react';
 
-import { IconButton, Rating, TextField } from '@mui/material';
+import {
+  IconButton,
+  Rating,
+  TextField
+} from '@mui/material';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-import { generateDiscoverURL, generateMovieSearchURL } from '../util/URLResolver';
+
+import { getDiscoverURL, getMovieSearchURL } from './api';
 import MovieList from './MovieList';
+
+import './css/styles.css'
 
 const Discover = props => {
   const [loading, setLoading] = useState(false);
   const [movies, setMovies] = useState([]);
-  const [filteredMovies, setFilteredMovies] = useState([]);
   const [query, setQuery] = useState('');
   const [rating, setRating] = useState(0);
 
@@ -25,28 +31,21 @@ const Discover = props => {
   };
 
   useEffect(() => {
-    const url = generateDiscoverURL();
+    const url = getDiscoverURL();
     fetchMovies(url);
   }, []);
 
   const searchMovies = async (query) => {
-    const url = query ? generateMovieSearchURL(query) : generateDiscoverURL();
+    const url = query ? getMovieSearchURL(query) : getDiscoverURL();
     fetchMovies(url);
-  }
-
-  const filterByRating = (rating) => {
-    let newFilteredMovies = movies && movies.filter(movie => Math.floor(movie.vote_average) >= (rating - 2) && Math.floor(movie.vote_average) <= rating);
-    setFilteredMovies(newFilteredMovies);
   }
 
   const handleRatingFilter = (newRating) => {
     if (!newRating || rating === newRating) {
       setRating(0);
-      setFilteredMovies([]);
       return;
     }
     setRating(newRating);
-    filterByRating(newRating);
   }
 
   const handleEnterKey = e => {
@@ -79,7 +78,7 @@ const Discover = props => {
             }} />
         </div>
       </div>
-      <MovieList movies={movies} filteredMovies={filteredMovies} rating={rating} loading={loading} />
+      <MovieList movies={movies} rating={rating} loading={loading} />
     </div>
   );
 };

@@ -1,0 +1,8 @@
+.moviehub-centered {
+    display: flex;
+    justify-content: center;
+}
+
+.moviehub-rating-filter {
+    background-color: green !important;
+}
