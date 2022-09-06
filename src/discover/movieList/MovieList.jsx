@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import PropTypes from 'prop-types'
 
 import { useNavigate } from "react-router-dom";
 
@@ -72,5 +73,12 @@ const MovieList = props => {
     </ImageList>
   );
 };
+
+MovieList.propTypes = {
+  loading: PropTypes.bool.isRequired,
+  movies: PropTypes.array.isRequired,
+  rating: PropTypes.number.isRequired
+
+}
 
 export default MovieList;

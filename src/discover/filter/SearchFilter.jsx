@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types'
 
 import {
   IconButton,
@@ -33,7 +34,12 @@ const SearchFilter = props => {
         <TextField
           type="search"
           placeholder="Search..."
-          onChange={(event) => setQuery(event.target.value)}
+          onChange={(event) => {
+            setQuery(event.target.value)
+            if (!event.target.value) {
+              searchMovies('')
+            }
+          }}
         />
         <IconButton aria-label='search' color="success" onClick={() => searchMovies(query)}>
           <SearchOutlinedIcon />
@@ -42,5 +48,9 @@ const SearchFilter = props => {
     </div>
   );
 };
+
+SearchFilter.propTypes = {
+  searchCallback: PropTypes.func.isRequired
+}
 
 export default SearchFilter;

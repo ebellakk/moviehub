@@ -112,8 +112,7 @@ const MovieDetails = props => {
         <Typography>
           Parental Guide:
           <IconButton aria-label={`info about ${movie.title}`} color={movie.adult? "error" : "success"}>
-            {movie.adult && <ExplicitIcon />}
-            {!movie.adult && <CheckCircleIcon />}
+            {movie.adult? <ExplicitIcon /> : <CheckCircleIcon />}
           </IconButton>
         </Typography>
       </Tooltip>
