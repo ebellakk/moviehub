@@ -1,17 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
-import {
-  Rating,
-} from '@mui/material';
+import { Rating } from "@mui/material";
 
-import { getDiscoverURL } from './api';
+import { getDiscoverURL } from "./api";
 
-import MovieList from './movieList/MovieList';
-import SearchFilter from './filter/SearchFilter';
+import MovieList from "./movieList/MovieList";
+import SearchFilter from "./filter/SearchFilter";
 
-import './css/styles.css'
+import "./css/styles.css";
 
-const Discover = props => {
+const Discover = (props) => {
   const [loading, setLoading] = useState(false);
   const [movies, setMovies] = useState([]);
   const [rating, setRating] = useState(0);
@@ -39,19 +37,20 @@ const Discover = props => {
       return;
     }
     setRating(newRating);
-  }
+  };
 
   return (
     <div>
       <SearchFilter searchCallback={fetchMovies} />
-      <div className="moviehub-rating-filter" >
+      <div className="moviehub-rating-filter">
         <Rating
           name="rating"
           value={rating}
           max={10}
           onChange={(event, newValue) => {
             handleRatingFilter(newValue);
-          }} />
+          }}
+        />
       </div>
       <MovieList movies={movies} rating={rating} loading={loading} />
     </div>
