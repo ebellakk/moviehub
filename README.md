@@ -8,4 +8,4 @@ In order to run the app on your machine, you have to request an API Token from T
 REACT_APP_TMDB_API_KEY=123456789
 
 ## Showcase
-You can see a live demo here https://kallebe-moviehub.herokuapp.com/
+You can see a live demo here [https://kallebe-moviehub.herokuapp.com/](https://moviehub-khaki.vercel.app/)
