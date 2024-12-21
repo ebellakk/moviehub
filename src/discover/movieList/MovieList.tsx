@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
 
 import { useNavigate } from "react-router-dom";
 
@@ -17,23 +16,23 @@ import InfoIcon from "@mui/icons-material/Info";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 import { generateImageURL } from "../../util/URLResolver";
+import { MovieListProps } from "../types/props/MovieListProps";
+import { Movie } from "../../detail/types/movie";
 
-const MovieList = (props) => {
-  const { loading, movies, rating } = props;
-
-  const [filteredMovies, setFilteredMovies] = useState([]);
+const MovieList = ({ loading, movies, rating }: MovieListProps) => {
+  const [filteredMovies, setFilteredMovies] = useState<Movie[]>([]);
   const isLargeViewport = useMediaQuery("(min-width:769px)");
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    let newFilteredMovies =
-      movies &&
-      movies.filter((movie) => Math.floor(movie.vote_average) >= rating);
+    let newFilteredMovies = movies?.filter(
+      (movie) => Math.floor(movie.vote_average) >= rating
+    );
     setFilteredMovies(newFilteredMovies);
   }, [movies, rating]);
 
-  const detailMovie = (id) => {
+  const detailMovie = (id: number) => {
     navigate(`/movies/${id}`);
   };
 
@@ -97,12 +96,6 @@ const MovieList = (props) => {
         ))}
     </ImageList>
   );
-};
-
-MovieList.propTypes = {
-  loading: PropTypes.bool.isRequired,
-  movies: PropTypes.array.isRequired,
-  rating: PropTypes.number.isRequired,
 };
 
 export default MovieList;

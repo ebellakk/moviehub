@@ -47,7 +47,7 @@ const Discover = (props) => {
           name="rating"
           value={rating}
           max={10}
-          onChange={(event, newValue) => {
+          onChange={(_, newValue: number) => {
             handleRatingFilter(newValue);
           }}
         />

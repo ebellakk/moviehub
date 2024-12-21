@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 
 import { IconButton, TextField } from "@mui/material";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
@@ -7,10 +6,9 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { getDiscoverURL, getMovieSearchURL } from "../api";
 
 import "../css/styles.css";
+import { SearchFilterProps } from "../types/props/SearchFilterProps";
 
-const SearchFilter = (props) => {
-  const { searchCallback } = props;
-
+const SearchFilter = ({ searchCallback }: SearchFilterProps) => {
   const [query, setQuery] = useState("");
 
   const searchMovies = async (query) => {
@@ -18,9 +16,9 @@ const SearchFilter = (props) => {
     searchCallback(url);
   };
 
-  const handleEnterKey = (e) => {
+  const handleEnterKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
     // "Enter" key
-    if (e.keyCode === 13) {
+    if (e.key === "Enter") {
       searchMovies(query);
     }
   };
@@ -48,10 +46,6 @@ const SearchFilter = (props) => {
       </div>
     </div>
   );
-};
-
-SearchFilter.propTypes = {
-  searchCallback: PropTypes.func.isRequired,
 };
 
 export default SearchFilter;

@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 import {
+  Box,
   CircularProgress,
+  Container,
   Divider,
   IconButton,
   ImageList,
@@ -21,9 +23,9 @@ import ExplicitIcon from "@mui/icons-material/Explicit";
 import { getMovieDetailURL } from "./api";
 import { extractYear, formatRuntime } from "../util/DateUtil";
 import { generateImageURL, generateIMDBURL } from "../util/URLResolver";
-import { Movie } from "./types/movie.type";
+import { Movie } from "./types/movie";
 
-const MovieDetails = (props) => {
+const MovieDetails = () => {
   const isLargeViewport = useMediaQuery("(min-width:769px)");
 
   const { uri } = useParams();
@@ -52,18 +54,25 @@ const MovieDetails = (props) => {
     fetchMovieDetails();
   }, [uri]);
 
-  const renderImage = (key, path, alt, title, subtitle, imdbID?) => {
+  const renderImage = (
+    key: number | string,
+    path: string,
+    alt: string,
+    title: string,
+    subtitle: string,
+    imdbID?: string
+  ) => {
     return imdbID ? (
       <ImageListItem key={key}>
-        <a href={generateIMDBURL(imdbID)}>
+        <a href={generateIMDBURL(imdbID)} target="_blank" rel="noreferrer">
           <img src={generateImageURL(path)} alt={alt} />
-          <ImageListItemBar title={title} subtitle={<span>{subtitle}</span>} />
+          <ImageListItemBar title={title} subtitle={subtitle} />
         </a>
       </ImageListItem>
     ) : (
       <ImageListItem key={key}>
         <img src={generateImageURL(path)} alt={alt} />
-        <ImageListItemBar title={title} subtitle={<span>{subtitle}</span>} />
+        <ImageListItemBar title={title} subtitle={subtitle} />
       </ImageListItem>
     );
   };
@@ -96,7 +105,7 @@ const MovieDetails = (props) => {
     <div>
       <ImageList cols={isLargeViewport ? 2 : 1}>
         {renderImage(
-          movie.id,
+          movie.imdb_id,
           movie.poster_path,
           `${movie.title} poster`,
           "Poster",
@@ -104,7 +113,7 @@ const MovieDetails = (props) => {
           movie.imdb_id
         )}
         {renderImage(
-          movie.imdb_id,
+          movie.id,
           movie.backdrop_path,
           `${movie.title} backdrop`,
           "Backdrop",
@@ -120,30 +129,33 @@ const MovieDetails = (props) => {
       <Typography variant="h2">{formatRuntime(movie.runtime)}</Typography>
       <Divider />
       <ImageList cols={isLargeViewport ? 3 : 2}>
-        {movie.production_companies &&
-          movie.production_companies.map((company) => {
-            return renderImage(
-              company.id,
-              company.logo_path,
-              company.name,
-              company.name,
-              company.origin_country
-            );
-          })}
+        {movie?.production_companies?.map((company) => {
+          return renderImage(
+            company.id,
+            company.logo_path,
+            company.name,
+            company.name,
+            company.origin_country
+          );
+        })}
       </ImageList>
       <Divider />
       <Typography>
-        {movie.genres && movie.genres.map((genre) => genre.name).join(", ")}
+        {movie?.genres?.map((genre) => genre.name).join(", ")}
       </Typography>
       <Divider />
       <Typography>{movie.tagline}</Typography>
       <Divider />
-      <Rating
-        name="read-only"
-        value={Math.floor(movie.vote_average)}
-        readOnly
-        max={10}
-      />
+      <Container maxWidth={false} disableGutters>
+        <Box bgcolor="grey.500">
+          <Rating
+            name="read-only"
+            value={Math.floor(movie.vote_average)}
+            readOnly
+            max={10}
+          />
+        </Box>
+      </Container>
       <Divider />
       <Tooltip title="MPA Rating">
         <Typography>
