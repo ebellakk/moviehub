@@ -62,38 +62,36 @@ const MovieList = ({ loading, movies, rating }: MovieListProps) => {
 
   return (
     <ImageList cols={isLargeViewport ? 3 : 2}>
-      {visibleMovies &&
-        visibleMovies.length > 0 &&
-        visibleMovies.map((movie) => (
-          <ImageListItem key={movie.id}>
-            <img
-              src={generateImageURL(movie.poster_path)}
-              alt={movie.name}
-              onClick={() => detailMovie(movie.id)}
-            />
-            <ImageListItemBar
-              title={movie.title}
-              subtitle={
-                <Rating
-                  name="read-only"
-                  value={Math.floor(movie.vote_average)}
-                  readOnly
-                  max={10}
-                />
-              }
-              actionIcon={
-                <Tooltip disableFocusListener title={movie.overview}>
-                  <IconButton
-                    aria-label={`info about ${movie.title}`}
-                    color="info"
-                  >
-                    <InfoIcon />
-                  </IconButton>
-                </Tooltip>
-              }
-            />
-          </ImageListItem>
-        ))}
+      {visibleMovies?.map((movie) => (
+        <ImageListItem key={movie.id}>
+          <img
+            src={generateImageURL(movie.poster_path)}
+            alt={movie.name}
+            onClick={() => detailMovie(movie.id)}
+          />
+          <ImageListItemBar
+            title={movie.title}
+            subtitle={
+              <Rating
+                name="read-only"
+                value={Math.floor(movie.vote_average)}
+                readOnly
+                max={10}
+              />
+            }
+            actionIcon={
+              <Tooltip disableFocusListener title={movie.overview}>
+                <IconButton
+                  aria-label={`info about ${movie.title}`}
+                  color="info"
+                >
+                  <InfoIcon />
+                </IconButton>
+              </Tooltip>
+            }
+          />
+        </ImageListItem>
+      ))}
     </ImageList>
   );
 };
