@@ -6,7 +6,7 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { getDiscoverURL, getMovieSearchURL } from "../api";
 
 import "../css/styles.css";
-import { SearchFilterProps } from "../types/props/SearchFilterProps";
+import { SearchFilterProps } from "./props/SearchFilterProps";
 
 const SearchFilter = ({ searchCallback }: SearchFilterProps) => {
   const [query, setQuery] = useState("");

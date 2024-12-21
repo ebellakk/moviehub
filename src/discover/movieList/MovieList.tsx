@@ -16,7 +16,7 @@ import InfoIcon from "@mui/icons-material/Info";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 import { generateImageURL } from "../../util/URLResolver";
-import { MovieListProps } from "../types/props/MovieListProps";
+import { MovieListProps } from "./props/MovieListProps";
 import { Movie } from "../../detail/types/movie";
 
 const MovieList = ({ loading, movies, rating }: MovieListProps) => {

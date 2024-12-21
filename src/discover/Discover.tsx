@@ -9,7 +9,7 @@ import SearchFilter from "./filter/SearchFilter";
 
 import "./css/styles.css";
 
-const Discover = (props) => {
+const Discover = () => {
   const [loading, setLoading] = useState(false);
   const [movies, setMovies] = useState([]);
   const [rating, setRating] = useState(0);
