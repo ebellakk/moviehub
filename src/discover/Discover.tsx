@@ -9,12 +9,14 @@ import SearchFilter from "./filter/SearchFilter";
 
 import "./css/styles.css";
 
-const Discover = () => {
-  const [loading, setLoading] = useState(false);
-  const [movies, setMovies] = useState([]);
-  const [rating, setRating] = useState(0);
+import { Movie } from "../detail/types/movie";
 
-  const fetchMovies = async (url) => {
+const Discover = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [movies, setMovies] = useState<Movie[]>([]);
+  const [rating, setRating] = useState<number>(0);
+
+  const fetchMovies = async (url: string) => {
     try {
       setLoading(true);
       const response = await fetch(url);
@@ -31,7 +33,7 @@ const Discover = () => {
     fetchMovies(url);
   }, []);
 
-  const handleRatingFilter = (newRating) => {
+  const handleRatingFilter = (newRating: number) => {
     if (!newRating || rating === newRating) {
       setRating(0);
       return;

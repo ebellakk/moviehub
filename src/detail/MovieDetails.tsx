@@ -8,8 +8,6 @@ import {
   Divider,
   IconButton,
   ImageList,
-  ImageListItem,
-  ImageListItemBar,
   Rating,
   Tooltip,
   Typography,
@@ -22,8 +20,9 @@ import ExplicitIcon from "@mui/icons-material/Explicit";
 
 import { getMovieDetailURL } from "./api";
 import { extractYear, formatRuntime } from "../util/DateUtil";
-import { generateImageURL, generateIMDBURL } from "../util/URLResolver";
 import { Movie } from "./types/movie";
+
+import Image from "../common/components/image/Image";
 
 const MovieDetails = () => {
   const isLargeViewport = useMediaQuery("(min-width:769px)");
@@ -54,29 +53,6 @@ const MovieDetails = () => {
     fetchMovieDetails();
   }, [uri]);
 
-  const renderImage = (
-    key: number | string,
-    path: string,
-    alt: string,
-    title: string,
-    subtitle: string,
-    imdbID?: string
-  ) => {
-    return imdbID ? (
-      <ImageListItem key={key}>
-        <a href={generateIMDBURL(imdbID)} target="_blank" rel="noreferrer">
-          <img src={generateImageURL(path)} alt={alt} />
-          <ImageListItemBar title={title} subtitle={subtitle} />
-        </a>
-      </ImageListItem>
-    ) : (
-      <ImageListItem key={key}>
-        <img src={generateImageURL(path)} alt={alt} />
-        <ImageListItemBar title={title} subtitle={subtitle} />
-      </ImageListItem>
-    );
-  };
-
   if (loading) {
     return <CircularProgress />;
   }
@@ -104,22 +80,22 @@ const MovieDetails = () => {
   return (
     <div>
       <ImageList cols={isLargeViewport ? 2 : 1}>
-        {renderImage(
-          movie.imdb_id,
-          movie.poster_path,
-          `${movie.title} poster`,
-          "Poster",
-          movie.original_title,
-          movie.imdb_id
-        )}
-        {renderImage(
-          movie.id,
-          movie.backdrop_path,
-          `${movie.title} backdrop`,
-          "Backdrop",
-          movie.original_title,
-          movie.imdb_id
-        )}
+        <Image
+          key={movie.imdb_id}
+          path={movie.poster_path}
+          alt={`${movie.title} poster`}
+          title="Poster"
+          subtitle={movie.original_title}
+          imdbID={movie.imdb_id}
+        />
+        <Image
+          key={movie.id}
+          path={movie.backdrop_path}
+          alt={`${movie.title} backdrop`}
+          title="Backdrop"
+          subtitle={movie.original_title}
+          imdbID={movie.imdb_id}
+        />
       </ImageList>
       <Divider />
       <Typography variant="h1">
@@ -129,15 +105,15 @@ const MovieDetails = () => {
       <Typography variant="h2">{formatRuntime(movie.runtime)}</Typography>
       <Divider />
       <ImageList cols={isLargeViewport ? 3 : 2}>
-        {movie?.production_companies?.map((company) => {
-          return renderImage(
-            company.id,
-            company.logo_path,
-            company.name,
-            company.name,
-            company.origin_country
-          );
-        })}
+        {movie?.production_companies?.map((company) => (
+          <Image
+            key={company.id}
+            path={company.logo_path}
+            alt={company.name}
+            title={company.name}
+            subtitle={company.origin_country}
+          />
+        ))}
       </ImageList>
       <Divider />
       <Typography>

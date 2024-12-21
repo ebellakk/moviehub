@@ -9,9 +9,9 @@ import "../css/styles.css";
 import { SearchFilterProps } from "./props/SearchFilterProps";
 
 const SearchFilter = ({ searchCallback }: SearchFilterProps) => {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState<string>("");
 
-  const searchMovies = async (query) => {
+  const searchMovies = async (query: string) => {
     const url = query ? getMovieSearchURL(query) : getDiscoverURL();
     searchCallback(url);
   };
