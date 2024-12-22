@@ -5,7 +5,7 @@ import { Rating } from "@mui/material";
 import { getDiscoverURL } from "./api";
 
 import MovieList from "./movieList/MovieList";
-import SearchFilter from "./filter/SearchFilter";
+import SearchFilter from "./searchFilter/SearchFilter";
 
 import "./css/styles.css";
 
