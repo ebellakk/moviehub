@@ -12,7 +12,7 @@ import "./css/styles.css";
 import { Movie } from "../detail/types/movie";
 
 const Discover = () => {
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [movies, setMovies] = useState<Movie[]>([]);
   const [rating, setRating] = useState<number>(0);
 

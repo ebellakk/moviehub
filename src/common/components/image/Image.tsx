@@ -1,9 +1,17 @@
 import React, { JSX } from "react";
 
-import { ImageProps } from "./props/ImageProps";
 import { ImageListItem, ImageListItemBar } from "@mui/material";
 
 import { generateIMDBURL, generateImageURL } from "../../../util/URLResolver";
+
+interface ImageProps {
+  key: number | string;
+  path: string;
+  alt: string;
+  title: string;
+  subtitle: string;
+  imdbID?: string;
+}
 
 const Image = ({
   key,

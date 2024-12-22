@@ -16,7 +16,7 @@ export interface Movie {
   overview: string;
 }
 
-interface ProductionCompany {
+export interface ProductionCompany {
   id: number;
   logo_path: string;
   name: string;

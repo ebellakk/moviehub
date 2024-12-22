@@ -1,29 +1,22 @@
 import React, { useEffect, useState } from "react";
 
-import { useNavigate } from "react-router-dom";
-
-import {
-  CircularProgress,
-  IconButton,
-  ImageList,
-  ImageListItem,
-  ImageListItemBar,
-  Rating,
-  Tooltip,
-  Typography,
-} from "@mui/material";
-import InfoIcon from "@mui/icons-material/Info";
+import { CircularProgress, ImageList } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
-import { generateImageURL } from "../../util/URLResolver";
-import { MovieListProps } from "./props/MovieListProps";
 import { Movie } from "../../detail/types/movie";
+
+import NoContent from "../../common/components/noContent/NoContent";
+import MovieCard from "./movieCard/MovieCard";
+
+interface MovieListProps {
+  loading: boolean;
+  movies: Movie[];
+  rating: number;
+}
 
 const MovieList = ({ loading, movies, rating }: MovieListProps) => {
   const [filteredMovies, setFilteredMovies] = useState<Movie[]>([]);
   const isLargeViewport = useMediaQuery("(min-width:769px)");
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     let newFilteredMovies = movies?.filter(
@@ -32,65 +25,26 @@ const MovieList = ({ loading, movies, rating }: MovieListProps) => {
     setFilteredMovies(newFilteredMovies);
   }, [movies, rating]);
 
-  const detailMovie = (id: number) => {
-    navigate(`/movies/${id}`);
-  };
-
   const visibleMovies =
     filteredMovies && filteredMovies.length > 0
       ? filteredMovies
       : rating
       ? filteredMovies
       : movies;
-  const hasVisibleMovies = visibleMovies && visibleMovies.length > 0;
+  const hasVisibleMovies = visibleMovies?.length > 0;
 
   if (loading) {
     return <CircularProgress />;
   }
 
   if (!hasVisibleMovies) {
-    return (
-      <div>
-        <img
-          src={`${process.env.PUBLIC_URL}/assets/images/nocontent.jpg`}
-          alt="no result"
-        />
-        <Typography>No result</Typography>
-      </div>
-    );
+    return <NoContent />;
   }
 
   return (
     <ImageList cols={isLargeViewport ? 3 : 2}>
       {visibleMovies?.map((movie) => (
-        <ImageListItem key={movie.id}>
-          <img
-            src={generateImageURL(movie.poster_path)}
-            alt={movie.name}
-            onClick={() => detailMovie(movie.id)}
-          />
-          <ImageListItemBar
-            title={movie.title}
-            subtitle={
-              <Rating
-                name="read-only"
-                value={Math.floor(movie.vote_average)}
-                readOnly
-                max={10}
-              />
-            }
-            actionIcon={
-              <Tooltip disableFocusListener title={movie.overview}>
-                <IconButton
-                  aria-label={`info about ${movie.title}`}
-                  color="info"
-                >
-                  <InfoIcon />
-                </IconButton>
-              </Tooltip>
-            }
-          />
-        </ImageListItem>
+        <MovieCard movie={movie} key={movie.id} />
       ))}
     </ImageList>
   );
