@@ -2,7 +2,7 @@ import React, { JSX } from "react";
 
 import { ImageListItem, ImageListItemBar } from "@mui/material";
 
-import { generateIMDBURL, generateImageURL } from "../../../util/URLResolver";
+import { generateIMDBURL, generateImageURL } from "../../util/URLResolver";
 
 interface ImageProps {
   key: number | string;

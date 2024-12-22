@@ -5,7 +5,7 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import ExplicitIcon from "@mui/icons-material/Explicit";
 
 import { Movie } from "../types/movie";
-import { extractYear, formatRuntime } from "../../util/DateUtil";
+import { extractYear, formatRuntime } from "../../common/util/DateUtil";
 
 interface BasicInfoProps {
   movie: Movie;

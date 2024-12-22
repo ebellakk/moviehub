@@ -10,7 +10,7 @@ import {
 import InfoIcon from "@mui/icons-material/Info";
 import { useNavigate } from "react-router-dom";
 
-import { generateImageURL } from "../../../util/URLResolver";
+import { generateImageURL } from "../../../common/util/URLResolver";
 import { Movie } from "../../../detail/types/movie";
 
 interface MovieCardProps {
