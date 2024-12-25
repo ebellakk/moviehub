@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import { IconButton, TextField } from "@mui/material";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
@@ -9,15 +9,24 @@ import "../css/styles.css";
 
 interface SearchFilterProps {
   searchCallback: (url: string) => void;
+  page: number;
+  setPageCallback: (page: number) => void;
 }
 
-const SearchFilter = ({ searchCallback }: SearchFilterProps) => {
+const SearchFilter = ({
+  searchCallback,
+  page,
+  setPageCallback,
+}: SearchFilterProps) => {
   const [query, setQuery] = useState<string>("");
 
-  const searchMovies = async (query: string) => {
-    const url = query ? getMovieSearchURL(query) : getDiscoverURL();
-    searchCallback(url);
-  };
+  const searchMovies = useCallback(
+    async (query: string) => {
+      const url = query ? getMovieSearchURL(query, page) : getDiscoverURL(page);
+      searchCallback(url);
+    },
+    [page, searchCallback]
+  );
 
   const handleEnterKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
     // "Enter" key
@@ -25,6 +34,11 @@ const SearchFilter = ({ searchCallback }: SearchFilterProps) => {
       searchMovies(query);
     }
   };
+
+  useEffect(() => {
+    searchMovies(query);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, searchMovies]);
 
   return (
     <div onKeyDown={handleEnterKey}>
@@ -35,14 +49,24 @@ const SearchFilter = ({ searchCallback }: SearchFilterProps) => {
           onChange={(event) => {
             setQuery(event.target.value);
             if (!event.target.value) {
-              searchMovies("");
+              if (page > 1) {
+                searchMovies("");
+              } else {
+                setPageCallback(1);
+              }
             }
           }}
         />
         <IconButton
           aria-label="search"
           color="success"
-          onClick={() => searchMovies(query)}
+          onClick={() => {
+            if (page > 1) {
+              setPageCallback(1);
+            } else {
+              searchMovies(query);
+            }
+          }}
         >
           <SearchOutlinedIcon />
         </IconButton>

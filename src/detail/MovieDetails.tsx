@@ -80,6 +80,7 @@ const MovieDetails = () => {
         aria-label="back"
         title="Back"
         color="primary"
+        style={{ position: "sticky", bottom: "1rem", float: "right", marginRight: "2rem" }}
         onClick={() => navigate("/movies")}
       >
         <ArrowBackIcon />
