@@ -14,7 +14,7 @@ interface SearchFilterProps {
 
 const SearchFilter = ({ searchCallback }: SearchFilterProps) => {
   const movieFilterStore = useMovieFilterStore();
-  const { page, query, setQuery, setPage } = movieFilterStore;
+  const { page, query, setQuery, setPage, setRating } = movieFilterStore;
 
   const searchMovies = useCallback(
     async (query: string) => {
@@ -61,6 +61,7 @@ const SearchFilter = ({ searchCallback }: SearchFilterProps) => {
           onChange={(event) => {
             setQuery(event.target.value);
             if (!event.target.value) {
+              setRating(0);
               refreshMovies("");
             }
           }}
