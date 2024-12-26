@@ -1,24 +1,20 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect } from "react";
 
 import { IconButton, TextField } from "@mui/material";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 
+import useMovieFilterStore from "../../store/filter/MovieFilterStore";
 import { getDiscoverURL, getMovieSearchURL } from "../api";
 
 import "../css/styles.css";
 
 interface SearchFilterProps {
   searchCallback: (url: string) => void;
-  page: number;
-  setPageCallback: (page: number) => void;
 }
 
-const SearchFilter = ({
-  searchCallback,
-  page,
-  setPageCallback,
-}: SearchFilterProps) => {
-  const [query, setQuery] = useState<string>("");
+const SearchFilter = ({ searchCallback }: SearchFilterProps) => {
+  const movieFilterStore = useMovieFilterStore();
+  const { page, query, setQuery, setPage } = movieFilterStore;
 
   const searchMovies = useCallback(
     async (query: string) => {
@@ -28,12 +24,27 @@ const SearchFilter = ({
     [page, searchCallback]
   );
 
-  const handleEnterKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    // "Enter" key
-    if (e.key === "Enter") {
-      searchMovies(query);
-    }
-  };
+  const refreshMovies = useCallback(
+    (query: string) => {
+      if (page === 1) {
+        searchMovies(query);
+      } else {
+        setPage(1);
+      }
+    },
+    [page, searchMovies, setPage]
+  );
+
+  const handleEnterKey = useCallback(
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
+      // "Enter" key
+      if (e.key === "Enter") {
+        refreshMovies(query);
+      }
+    },
+
+    [refreshMovies, query]
+  );
 
   useEffect(() => {
     searchMovies(query);
@@ -46,14 +57,11 @@ const SearchFilter = ({
         <TextField
           type="search"
           placeholder="Search..."
+          value={query}
           onChange={(event) => {
             setQuery(event.target.value);
             if (!event.target.value) {
-              if (page > 1) {
-                searchMovies("");
-              } else {
-                setPageCallback(1);
-              }
+              refreshMovies("");
             }
           }}
         />
@@ -61,11 +69,7 @@ const SearchFilter = ({
           aria-label="search"
           color="success"
           onClick={() => {
-            if (page > 1) {
-              setPageCallback(1);
-            } else {
-              searchMovies(query);
-            }
+            refreshMovies(query);
           }}
         >
           <SearchOutlinedIcon />

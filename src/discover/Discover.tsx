@@ -3,6 +3,7 @@ import React, { useCallback, useState } from "react";
 import { Rating } from "@mui/material";
 
 import { Movie } from "../detail/types/movie";
+import useMovieFilterStore from "../store/filter/MovieFilterStore";
 
 import MovieList from "./movieList/MovieList";
 import SearchFilter from "./searchFilter/SearchFilter";
@@ -13,8 +14,8 @@ import "./css/styles.css";
 const Discover = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [movies, setMovies] = useState<Movie[]>([]);
-  const [rating, setRating] = useState<number>(0);
-  const [page, setPage] = useState<number>(1);
+  const movieFilterStore = useMovieFilterStore();
+  const { page, setPage, rating, setRating } = movieFilterStore;
 
   const fetchMovies = useCallback(async (url: string) => {
     try {
@@ -38,11 +39,7 @@ const Discover = () => {
 
   return (
     <div>
-      <SearchFilter
-        searchCallback={fetchMovies}
-        page={page}
-        setPageCallback={setPage}
-      />
+      <SearchFilter searchCallback={fetchMovies} />
       <div className="moviehub-rating-filter">
         <Rating
           name="rating"
