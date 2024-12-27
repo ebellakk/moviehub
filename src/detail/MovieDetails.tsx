@@ -9,13 +9,13 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { getMovieDetailURL } from "./api";
 import { Movie } from "./types/movie";
 
-import NoContent from "../common/components/noContent/NoContent";
-import Posters from "./posters/Posters";
-import BasicInfo from "./basicInfo/BasicInfo";
-import ProductionCompanies from "./productionCompanies/ProductionCompanies";
-import MovieRating from "./movieRating/MovieRating";
+import { NoContent } from "../common/components/noContent/NoContent";
+import { Posters } from "./posters/Posters";
+import { MovieBasicInfo } from "./basicInfo/MovieBasicInfo";
+import { ProductionCompanies } from "./productionCompanies/ProductionCompanies";
+import { MovieRating } from "./movieRating/MovieRating";
 
-const MovieDetails = () => {
+export const MovieDetails = () => {
   const isLargeViewport = useMediaQuery("(min-width:769px)");
 
   const { uri } = useParams();
@@ -66,9 +66,9 @@ const MovieDetails = () => {
 
   return (
     <div>
-      <Posters movie={movie} isLargeViewport={isLargeViewport} />
+      <Posters {...movie} isLargeViewport={isLargeViewport} />
       <Divider />
-      <BasicInfo movie={movie} />
+      <MovieBasicInfo {...movie} />
       <Divider />
       <MovieRating voteAverage={movie.vote_average} />
       <Divider />
@@ -80,7 +80,12 @@ const MovieDetails = () => {
         aria-label="back"
         title="Back"
         color="primary"
-        style={{ position: "sticky", bottom: "1rem", float: "right", marginRight: "2rem" }}
+        style={{
+          position: "sticky",
+          bottom: "1rem",
+          float: "right",
+          marginRight: "1rem",
+        }}
         onClick={() => navigate("/movies")}
       >
         <ArrowBackIcon />
@@ -88,5 +93,3 @@ const MovieDetails = () => {
     </div>
   );
 };
-
-export default MovieDetails;

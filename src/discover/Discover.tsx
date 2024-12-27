@@ -5,13 +5,13 @@ import { Rating } from "@mui/material";
 import { Movie } from "../detail/types/movie";
 import useMovieFilterStore from "../store/filter/MovieFilterStore";
 
-import MovieList from "./movieList/MovieList";
-import SearchFilter from "./searchFilter/SearchFilter";
-import PaginationButton from "./pagination/PaginationButton";
+import { MovieList } from "./movieList/MovieList";
+import { SearchFilter } from "./searchFilter/SearchFilter";
+import { PaginationButton } from "./pagination/PaginationButton";
 
 import "./css/styles.css";
 
-const Discover = () => {
+export const Discover = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [movies, setMovies] = useState<Movie[]>([]);
   const movieFilterStore = useMovieFilterStore();
@@ -71,5 +71,3 @@ const Discover = () => {
     </div>
   );
 };
-
-export default Discover;

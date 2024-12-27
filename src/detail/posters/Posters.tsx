@@ -2,38 +2,47 @@ import React, { JSX } from "react";
 
 import { ImageList } from "@mui/material";
 
-import Image from "../../common/components/image/Image";
+import { Image } from "../../common/components/image/Image";
 import { Movie } from "../types/movie";
 
-interface PostersProps {
-  movie: Movie;
-  isLargeViewport: boolean;
-}
+type PostersProps = Pick<
+  Movie,
+  | "id"
+  | "imdb_id"
+  | "poster_path"
+  | "title"
+  | "original_title"
+  | "imdb_id"
+  | "backdrop_path"
+> & { isLargeViewport: boolean };
 
-const Posters = ({
-  movie,
+export const Posters = ({
+  id,
+  imdb_id,
+  poster_path,
+  title,
+  original_title,
+  backdrop_path,
   isLargeViewport,
 }: PostersProps): JSX.Element => {
   return (
     <ImageList cols={isLargeViewport ? 2 : 1}>
       <Image
-        key={movie.imdb_id}
-        path={movie.poster_path}
-        alt={`${movie.title} poster`}
+        key={imdb_id}
+        path={poster_path}
+        alt={`${title} poster`}
         title="Poster"
-        subtitle={movie.original_title}
-        imdbID={movie.imdb_id}
+        subtitle={original_title}
+        imdbID={imdb_id}
       />
       <Image
-        key={movie.id}
-        path={movie.backdrop_path}
-        alt={`${movie.title} backdrop`}
+        key={id}
+        path={backdrop_path}
+        alt={`${title} backdrop`}
         title="Backdrop"
-        subtitle={movie.original_title}
-        imdbID={movie.imdb_id}
+        subtitle={original_title}
+        imdbID={imdb_id}
       />
     </ImageList>
   );
 };
-
-export default Posters;

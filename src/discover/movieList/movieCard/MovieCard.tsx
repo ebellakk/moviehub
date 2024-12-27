@@ -13,11 +13,19 @@ import { useNavigate } from "react-router-dom";
 import { generateImageURL } from "../../../common/util/URLResolver";
 import { Movie } from "../../../detail/types/movie";
 
-interface MovieCardProps {
-  movie: Movie;
-}
+type MovieCardProps = Pick<
+  Movie,
+  "id" | "title" | "name" | "vote_average" | "poster_path" | "overview"
+>;
 
-const MovieCard = ({ movie }: MovieCardProps): JSX.Element => {
+export const MovieCard = ({
+  id,
+  title,
+  name,
+  vote_average,
+  poster_path,
+  overview,
+}: MovieCardProps): JSX.Element => {
   const navigate = useNavigate();
 
   const detailMovie = (id: number) => {
@@ -25,25 +33,25 @@ const MovieCard = ({ movie }: MovieCardProps): JSX.Element => {
   };
 
   return (
-    <ImageListItem key={movie.id}>
+    <ImageListItem key={id}>
       <img
-        src={generateImageURL(movie.poster_path)}
-        alt={movie.name}
-        onClick={() => detailMovie(movie.id)}
+        src={generateImageURL(poster_path)}
+        alt={name}
+        onClick={() => detailMovie(id)}
       />
       <ImageListItemBar
-        title={movie.title}
+        title={title}
         subtitle={
           <Rating
             name="read-only"
-            value={Math.floor(movie.vote_average)}
+            value={Math.floor(vote_average)}
             readOnly
             max={10}
           />
         }
         actionIcon={
-          <Tooltip disableFocusListener title={movie.overview}>
-            <IconButton aria-label={`info about ${movie.title}`} color="info">
+          <Tooltip disableFocusListener title={overview}>
+            <IconButton aria-label={`info about ${title}`} color="info">
               <InfoIcon />
             </IconButton>
           </Tooltip>
@@ -52,5 +60,3 @@ const MovieCard = ({ movie }: MovieCardProps): JSX.Element => {
     </ImageListItem>
   );
 };
-
-export default MovieCard;

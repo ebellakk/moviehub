@@ -5,8 +5,8 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 
 import { Movie } from "../../detail/types/movie";
 
-import NoContent from "../../common/components/noContent/NoContent";
-import MovieCard from "./movieCard/MovieCard";
+import { NoContent } from "../../common/components/noContent/NoContent";
+import { MovieCard } from "./movieCard/MovieCard";
 
 interface MovieListProps {
   loading: boolean;
@@ -14,7 +14,7 @@ interface MovieListProps {
   rating: number;
 }
 
-const MovieList = ({ loading, movies, rating }: MovieListProps) => {
+export const MovieList = ({ loading, movies, rating }: MovieListProps) => {
   const [filteredMovies, setFilteredMovies] = useState<Movie[]>([]);
   const isLargeViewport = useMediaQuery("(min-width:769px)");
 
@@ -44,10 +44,8 @@ const MovieList = ({ loading, movies, rating }: MovieListProps) => {
   return (
     <ImageList cols={isLargeViewport ? 3 : 2}>
       {visibleMovies?.map((movie) => (
-        <MovieCard movie={movie} key={movie.id} />
+        <MovieCard {...movie} key={movie.id} />
       ))}
     </ImageList>
   );
 };
-
-export default MovieList;

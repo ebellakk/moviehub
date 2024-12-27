@@ -13,7 +13,7 @@ interface ImageProps {
   imdbID?: string;
 }
 
-const Image = ({
+export const Image = ({
   key,
   path,
   alt,
@@ -35,5 +35,3 @@ const Image = ({
     </ImageListItem>
   );
 };
-
-export default Image;

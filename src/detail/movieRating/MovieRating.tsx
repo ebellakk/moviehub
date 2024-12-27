@@ -6,7 +6,7 @@ interface MovieRatingProps {
   voteAverage: number;
 }
 
-const MovieRating = ({ voteAverage }: MovieRatingProps): JSX.Element => {
+export const MovieRating = ({ voteAverage }: MovieRatingProps): JSX.Element => {
   return (
     <Container maxWidth={false} disableGutters>
       <Box bgcolor="grey.500">
@@ -20,5 +20,3 @@ const MovieRating = ({ voteAverage }: MovieRatingProps): JSX.Element => {
     </Container>
   );
 };
-
-export default MovieRating;

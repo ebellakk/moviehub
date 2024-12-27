@@ -5,8 +5,8 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { ThemeProvider } from "@mui/styles";
 import { createTheme } from "@mui/material/styles";
 
-import MovieDetails from "./detail/MovieDetails";
-import Discover from "./discover/Discover";
+import { MovieDetails } from "./detail/MovieDetails";
+import { Discover } from "./discover/Discover";
 
 const theme = createTheme();
 

@@ -12,7 +12,7 @@ interface SearchFilterProps {
   searchCallback: (url: string) => void;
 }
 
-const SearchFilter = ({ searchCallback }: SearchFilterProps) => {
+export const SearchFilter = ({ searchCallback }: SearchFilterProps) => {
   const movieFilterStore = useMovieFilterStore();
   const { page, query, setQuery, setPage, setRating } = movieFilterStore;
 
@@ -79,5 +79,3 @@ const SearchFilter = ({ searchCallback }: SearchFilterProps) => {
     </div>
   );
 };
-
-export default SearchFilter;

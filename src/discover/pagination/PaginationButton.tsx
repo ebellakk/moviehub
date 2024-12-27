@@ -10,7 +10,7 @@ interface PaginationButtonProps {
   disabled?: boolean;
 }
 
-const PaginationButton = ({
+export const PaginationButton = ({
   onClickCallback,
   type,
   disabled,
@@ -23,7 +23,8 @@ const PaginationButton = ({
       color="primary"
       style={{
         position: "sticky",
-        bottom: "1rem",
+        bottom: "50%",
+        zIndex: 9999,
         float: isBackward ? "left" : "right",
         marginLeft: isBackward ? "1rem" : undefined,
         marginRight: isBackward ? undefined : "1rem",
@@ -35,5 +36,3 @@ const PaginationButton = ({
     </Fab>
   );
 };
-
-export default PaginationButton;
