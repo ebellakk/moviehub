@@ -1,6 +1,6 @@
 import React, { JSX } from "react";
 
-import { ImageList } from "@mui/material";
+import { ImageList, useMediaQuery } from "@mui/material";
 
 import { Image } from "../../common/components/image/Image";
 import { Movie } from "../types/movie";
@@ -14,7 +14,7 @@ type PostersProps = Pick<
   | "original_title"
   | "imdb_id"
   | "backdrop_path"
-> & { isLargeViewport: boolean };
+>;
 
 export const Posters = ({
   id,
@@ -23,8 +23,9 @@ export const Posters = ({
   title,
   original_title,
   backdrop_path,
-  isLargeViewport,
 }: PostersProps): JSX.Element => {
+  const isLargeViewport = useMediaQuery("(min-width:1024px)");
+
   return (
     <ImageList cols={isLargeViewport ? 2 : 1}>
       <Image

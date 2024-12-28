@@ -3,7 +3,6 @@ import { useParams, useNavigate } from "react-router-dom";
 
 import { CircularProgress, Divider } from "@mui/material";
 import Fab from "@mui/material/Fab";
-import useMediaQuery from "@mui/material/useMediaQuery";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 import { getMovieDetailURL } from "./api";
@@ -16,8 +15,6 @@ import { ProductionCompanies } from "./productionCompanies/ProductionCompanies";
 import { MovieRating } from "./movieRating/MovieRating";
 
 export const MovieDetails = () => {
-  const isLargeViewport = useMediaQuery("(min-width:769px)");
-
   const { uri } = useParams();
 
   const [movie, setMovie] = useState<Movie>(null);
@@ -66,16 +63,13 @@ export const MovieDetails = () => {
 
   return (
     <div>
-      <Posters {...movie} isLargeViewport={isLargeViewport} />
+      <Posters {...movie} />
       <Divider />
       <MovieBasicInfo {...movie} />
       <Divider />
       <MovieRating voteAverage={movie.vote_average} />
       <Divider />
-      <ProductionCompanies
-        productionCompanies={movie.production_companies}
-        isLargeViewport={isLargeViewport}
-      />
+      <ProductionCompanies productionCompanies={movie.production_companies} />
       <Fab
         aria-label="back"
         title="Back"
