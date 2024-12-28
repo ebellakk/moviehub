@@ -24,13 +24,21 @@ export const Image = ({
   return imdbID ? (
     <ImageListItem key={key}>
       <a href={generateIMDBURL(imdbID)} target="_blank" rel="noreferrer">
-        <img src={generateImageURL(path)} alt={alt} />
+        <img
+          src={generateImageURL(path)}
+          alt={alt}
+          style={{ maxWidth: "100%" }}
+        />
         <ImageListItemBar title={title} subtitle={subtitle} />
       </a>
     </ImageListItem>
   ) : (
     <ImageListItem key={key}>
-      <img src={generateImageURL(path)} alt={alt} />
+      <img
+        src={generateImageURL(path)}
+        alt={alt}
+        style={{ maxWidth: "100%" }}
+      />
       <ImageListItemBar title={title} subtitle={subtitle} />
     </ImageListItem>
   );
