@@ -19,6 +19,7 @@ export const PaginationButton = ({
   return (
     <Fab
       aria-label="back"
+      id={`moviehub-pagination-${type}`}
       title="Back"
       color="primary"
       style={{

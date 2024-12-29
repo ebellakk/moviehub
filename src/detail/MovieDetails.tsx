@@ -71,6 +71,7 @@ export const MovieDetails = () => {
       <Divider />
       <ProductionCompanies productionCompanies={movie.production_companies} />
       <Fab
+        id="moviehub-detail-back-button"
         aria-label="back"
         title="Back"
         color="primary"

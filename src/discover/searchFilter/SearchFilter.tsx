@@ -55,6 +55,7 @@ export const SearchFilter = ({ searchCallback }: SearchFilterProps) => {
     <div onKeyDown={handleEnterKey}>
       <div className="moviehub-centered">
         <TextField
+          id="moviehub-search"
           type="search"
           placeholder="Search..."
           value={query}
@@ -67,6 +68,7 @@ export const SearchFilter = ({ searchCallback }: SearchFilterProps) => {
           }}
         />
         <IconButton
+          id="moviehub-search-button"
           aria-label="search"
           color="success"
           onClick={() => {

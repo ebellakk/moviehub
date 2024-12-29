@@ -35,6 +35,7 @@ export const MovieCard = ({
   return (
     <ImageListItem key={id}>
       <img
+        id={`moviehub-movie-${id}`}
         src={generateImageURL(poster_path)}
         alt={name}
         onClick={() => detailMovie(id)}

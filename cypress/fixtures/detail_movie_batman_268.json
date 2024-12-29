@@ -1,0 +1,81 @@
+{
+  "adult": false,
+  "backdrop_path": "/2va32apQP97gvUxaMnL5wYt4CRB.jpg",
+  "belongs_to_collection": {
+    "id": 120794,
+    "name": "Batman Collection",
+    "poster_path": "/yYSqU3iOJmdeNL3us28WBf5KvNV.jpg",
+    "backdrop_path": "/4UHZWw5lV3ZoadTjXuVOakdH32L.jpg"
+  },
+  "budget": 35000000,
+  "genres": [
+    {
+      "id": 14,
+      "name": "Fantasy"
+    },
+    {
+      "id": 28,
+      "name": "Action"
+    },
+    {
+      "id": 80,
+      "name": "Crime"
+    }
+  ],
+  "homepage": "",
+  "id": 268,
+  "imdb_id": "tt0096895",
+  "origin_country": ["US"],
+  "original_language": "en",
+  "original_title": "Batman",
+  "overview": "Batman must face his most ruthless nemesis when a deformed madman calling himself \"The Joker\" seizes control of Gotham's criminal underworld.",
+  "popularity": 46.726,
+  "poster_path": "/oYWUsIVoMl2H6Xl3FTBi9R9Y4OS.jpg",
+  "production_companies": [
+    {
+      "id": 174,
+      "logo_path": "/zhD3hhtKB5qyv7ZeL4uLpNxgMVU.png",
+      "name": "Warner Bros. Pictures",
+      "origin_country": "US"
+    },
+    {
+      "id": 67889,
+      "logo_path": null,
+      "name": "Polygram Pictures",
+      "origin_country": "US"
+    },
+    {
+      "id": 276,
+      "logo_path": null,
+      "name": "Guber/Peters Company",
+      "origin_country": "US"
+    }
+  ],
+  "production_countries": [
+    {
+      "iso_3166_1": "US",
+      "name": "United States of America"
+    }
+  ],
+  "release_date": "1989-06-21",
+  "revenue": 411348924,
+  "runtime": 126,
+  "spoken_languages": [
+    {
+      "english_name": "English",
+      "iso_639_1": "en",
+      "name": "English"
+    },
+    {
+      "english_name": "French",
+      "iso_639_1": "fr",
+      "name": "Français"
+    }
+  ],
+  "status": "Released",
+  "tagline": "Justice is always darkest before the dawn.",
+  "title": "Batman",
+  "video": false,
+  "vote_average": 7.229,
+  "vote_count": 7866
+}
