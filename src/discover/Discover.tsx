@@ -10,6 +10,7 @@ import { SearchFilter } from "./searchFilter/SearchFilter";
 import { PaginationButton } from "./pagination/PaginationButton";
 
 import "./css/styles.css";
+import { TMDBCredit } from "../common/components/tmdb/TMDBCredit";
 
 export const Discover = () => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -68,6 +69,7 @@ export const Discover = () => {
           />
         </>
       )}
+      <TMDBCredit />
     </div>
   );
 };
