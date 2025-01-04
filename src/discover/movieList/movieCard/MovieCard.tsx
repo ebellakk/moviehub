@@ -1,13 +1,16 @@
 import React, { JSX } from "react";
 
 import {
+  Box,
   IconButton,
   ImageListItem,
   ImageListItemBar,
   Rating,
   Tooltip,
+  useMediaQuery,
 } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
+import StarIcon from "@mui/icons-material/Star";
 import { useNavigate } from "react-router-dom";
 
 import { generateImageURL } from "../../../common/util/URLResolver";
@@ -26,6 +29,7 @@ export const MovieCard = ({
   poster_path,
   overview,
 }: MovieCardProps): JSX.Element => {
+  const isLargeViewport = useMediaQuery("(min-width:769px)");
   const navigate = useNavigate();
 
   const detailMovie = (id: number) => {
@@ -43,12 +47,21 @@ export const MovieCard = ({
       <ImageListItemBar
         title={title}
         subtitle={
-          <Rating
-            name="read-only"
-            value={Math.floor(vote_average)}
-            readOnly
-            max={10}
-          />
+          isLargeViewport ? (
+            <Rating
+              name="read-only"
+              value={Math.floor(vote_average)}
+              readOnly
+              max={10}
+            />
+          ) : (
+            <Box display="inline-flex" alignItems="center">
+              <Box>
+                <StarIcon />
+              </Box>
+              <Box style={{ color: "black" }}>{Math.floor(vote_average)}</Box>
+            </Box>
+          )
         }
         actionIcon={
           <Tooltip disableFocusListener title={overview}>
