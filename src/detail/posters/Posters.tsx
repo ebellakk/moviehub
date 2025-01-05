@@ -1,6 +1,6 @@
 import React, { JSX } from "react";
 
-import { ImageList, useMediaQuery } from "@mui/material";
+import { ImageList, useMediaQuery, Zoom } from "@mui/material";
 
 import { Image } from "../../common/components/image/Image";
 import { Movie } from "../types/movie";
@@ -27,23 +27,25 @@ export const Posters = ({
   const isLargeViewport = useMediaQuery("(min-width:1024px)");
 
   return (
-    <ImageList cols={isLargeViewport ? 2 : 1}>
-      <Image
-        key={imdb_id}
-        path={poster_path}
-        alt={`${title} poster`}
-        title="Poster"
-        subtitle={original_title}
-        imdbID={imdb_id}
-      />
-      <Image
-        key={id}
-        path={backdrop_path}
-        alt={`${title} backdrop`}
-        title="Backdrop"
-        subtitle={original_title}
-        imdbID={imdb_id}
-      />
-    </ImageList>
+    <Zoom in={true}>
+      <ImageList cols={isLargeViewport ? 2 : 1}>
+        <Image
+          key={imdb_id}
+          path={poster_path}
+          alt={`${title} poster`}
+          title="Poster"
+          subtitle={original_title}
+          imdbID={imdb_id}
+        />
+        <Image
+          key={id}
+          path={backdrop_path}
+          alt={`${title} backdrop`}
+          title="Backdrop"
+          subtitle={original_title}
+          imdbID={imdb_id}
+        />
+      </ImageList>
+    </Zoom>
   );
 };

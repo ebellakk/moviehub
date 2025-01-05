@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { CircularProgress, ImageList } from "@mui/material";
+import { CircularProgress, ImageList, Slide } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 import { Movie } from "../../detail/types/movie";
@@ -42,10 +42,12 @@ export const MovieList = ({ loading, movies, rating }: MovieListProps) => {
   }
 
   return (
-    <ImageList cols={isLargeViewport ? 3 : 2}>
-      {visibleMovies?.map((movie) => (
-        <MovieCard {...movie} key={movie.id} />
-      ))}
-    </ImageList>
+    <Slide in={hasVisibleMovies} direction="left">
+      <ImageList cols={isLargeViewport ? 3 : 2}>
+        {visibleMovies?.map((movie) => (
+          <MovieCard {...movie} key={movie.id} />
+        ))}
+      </ImageList>
+    </Slide>
   );
 };
