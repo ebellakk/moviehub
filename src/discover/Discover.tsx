@@ -16,7 +16,7 @@ export const Discover = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [movies, setMovies] = useState<Movie[]>([]);
   const movieFilterStore = useMovieFilterStore();
-  const { page, setPage, rating, setRating } = movieFilterStore;
+  const { page, setPage, setPreviousPage, rating, setRating } = movieFilterStore;
 
   const fetchMovies = useCallback(async (url: string) => {
     try {
@@ -56,13 +56,17 @@ export const Discover = () => {
         <>
           <PaginationButton
             onClickCallback={() => {
-              if (page > 1) setPage(page - 1);
+              if (page > 1) {
+                setPreviousPage(page);
+                setPage(page - 1);
+              }
             }}
             type="backward"
             disabled={page === 1}
           />
           <PaginationButton
             onClickCallback={() => {
+              setPreviousPage(page);
               setPage(page + 1);
             }}
             type="forward"

@@ -4,6 +4,7 @@ import { CircularProgress, ImageList, Slide } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 import { Movie } from "../../detail/types/movie";
+import useMovieFilterStore from "../../store/filter/MovieFilterStore";
 
 import { NoContent } from "../../common/components/noContent/NoContent";
 import { MovieCard } from "./movieCard/MovieCard";
@@ -17,6 +18,9 @@ interface MovieListProps {
 export const MovieList = ({ loading, movies, rating }: MovieListProps) => {
   const [filteredMovies, setFilteredMovies] = useState<Movie[]>([]);
   const isLargeViewport = useMediaQuery("(min-width:769px)");
+
+  const movieFilterStore = useMovieFilterStore();
+  const { page, previousPage } = movieFilterStore;
 
   useEffect(() => {
     let newFilteredMovies = movies?.filter(
@@ -42,7 +46,10 @@ export const MovieList = ({ loading, movies, rating }: MovieListProps) => {
   }
 
   return (
-    <Slide in={hasVisibleMovies} direction="left">
+    <Slide
+      in={hasVisibleMovies}
+      direction={page > previousPage ? "left" : "right"}
+    >
       <ImageList cols={isLargeViewport ? 3 : 2}>
         {visibleMovies?.map((movie) => (
           <MovieCard {...movie} key={movie.id} />
