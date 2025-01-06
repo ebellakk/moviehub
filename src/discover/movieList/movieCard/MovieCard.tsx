@@ -45,7 +45,7 @@ export const MovieCard = ({
         onClick={() => detailMovie(id)}
       />
       <ImageListItemBar
-        title={title}
+        title={<span style={{ textWrap: "pretty" }}>{title}</span>}
         subtitle={
           isLargeViewport ? (
             <Rating
