@@ -8,7 +8,7 @@ export const TMDBCredit = (): JSX.Element => (
   >
     <img
       id="moviehub-tmdb-credit"
-      src={`${process.env.PUBLIC_URL}/assets/images/tmdb.svg`}
+      src='/assets/images/tmdb.svg'
       alt="tmdb credit"
       style={{ width: "100px" }}
     />
