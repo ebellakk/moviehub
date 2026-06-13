@@ -1,6 +1,5 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import netlify from "@netlify/vite-plugin";
 
 export default defineConfig(() => {
     // Load env file based on `mode` in the current working directory.
@@ -15,6 +14,6 @@ export default defineConfig(() => {
         build: {
             outDir: 'build',
         },
-        plugins: [react(), netlify()],
+        plugins: [react()],
     };
 });
